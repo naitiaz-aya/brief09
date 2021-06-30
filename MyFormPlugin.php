@@ -65,10 +65,10 @@
   
       echo $content;
   
-      echo 'shortcod : ' . '[myform]';
+      
   }
   
-  function html_form_code()
+  function form()
   {
   
       getData();
@@ -198,7 +198,7 @@
   function shortCode()
   {
       ob_start();
-      html_form_code();
+      form();
   
       return ob_get_clean();
   }
