@@ -21,51 +21,52 @@
   
   wp_register_style( 'namespace', 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css' );
   
+  
+//Actions are the hooks that the WordPress core launches at specific points during execution, or when specific events occur. Plugins can specify that one or more of its PHP functions are executed at these points, using the Action API.
   add_action('admin_menu', 'menuAdded');
   
   function menuAdded()
   {
-      add_menu_page('Goo Contact Page', 'Go Contact', 'manage_options', 'go-contact', 'formInit','dashicons-database-add',5);
+      
+    //This function takes a capability which will be used to determine whether or not a page is included in the menu.
+    // The function which is hooked in to handle the output of the page must check that the user has the required capability as well.
+      add_menu_page('My Form', 'My Form', 'manage_options', 'My form', 'formInit',5);
+      
   }
   
   
   function formInit()
   {
-  wp_enqueue_style('namespace'); 
-  
-  
-      echo '<h1>Hi There,</h1>';
-  
-      $content = '';
-      $content .= '<form method ="post" action = "">';
-  
-      $content .= '<div>';
-      $content .= '<input type = "checkbox" name ="name" id="name1" value="true" />';
-      $content .= '<label class="form-label" for ="name"> Name : </label>';
-      $content .= '</div>';
-  
-      $content .= '<div>';
-      $content .= '<input type = "checkbox" name ="email" value="true" class="form-control"/>';
-      $content .= '<label for ="email"> Email : </label>';
-      $content .= '</div>';
-  
-      $content .= '<div>';
-      $content .= '<input type = "checkbox" name ="subject" value="true" class="form-control"/>';
-      $content .= '<label for ="subject"> Subject : </label>';
-      $content .= '</div>';
-  
-      $content .= '<div>';
-      $content .= '<input type = "checkbox" name ="message" value="true"  class="form-control"/>';
-      $content .= '<label for ="message"> Message : </label>';
-      $content .= '</div>';
-  
-      $content .= '<input class="btn btn-primary" type="submit" name="submit-contact" class=" btn btn-md" value= "Submit"/>';
-  
-      $content .= '</form>';
-  
-      echo $content;
+    wp_enqueue_style('namespace'); 
+    $fields = getData();
   
       
+  
+      ?>
+      <div class="content">    
+          <form method="post" action="">
+              <div class="input-content">
+                  <input type = "checkbox" name ="name" id="name1" value="true"<?php echo $fields->name == 1 ? 'checked' : '' ?>>
+                  <label for=""> Name</label>
+              </div>
+              
+              <div class="input-content">
+                  <input type = "checkbox" name ="email" value="true" class="form-control" <?php echo $fields->email == 1 ? 'checked' : '' ?>>
+                  <label for="">Email</label>
+              </div>
+              <div class="input-content">
+                  <input type = "checkbox" name ="subject" value="true" class="form-control" <?php echo $fields->subject == 1 ? 'checked' : '' ?>>
+                  <label for="">Subject</label>
+              </div>
+              <div class="input-content">
+                  <input type = "checkbox" name ="message" value="true"  class="form-control" <?php echo $fields->message == 1 ? 'checked' : '' ?>>
+                  <label for="">Message</label>
+              </div>
+              <div class="input-content">
+                 <input class="btn btn-primary" type="submit" name="submit-contact" class=" btn btn-md" value= "Submit"/>
+              </div>
+          </form>
+      <?php
   }
   
   function form()
@@ -101,6 +102,7 @@
       echo '</form>';
   
     }
+    
   
   function createtable()
   {
@@ -212,3 +214,4 @@
   
 
 
+?>
